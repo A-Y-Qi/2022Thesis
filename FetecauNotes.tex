@@ -1,0 +1,174 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{commath}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage[left=1.00in, right=1.00in, top=1.00in, bottom=1.00in]{geometry}
+\usepackage{enumitem}
+\renewcommand{\baselinestretch}{1.5}
+\newcommand{\I}{\mathbb{I}}
+\usepackage{subcaption}
+
+\title{Fetecau Model Part 1}
+\author{Andree Qi }
+\date{November 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\textbf{\large {1D model:}}
+
+$$\partial_tu^++\partial_x(\gamma
+u^+)=-\lambda^+[u^+,u^-]+\lambda^-[u^+,u^-]u^-$$ 
+$$\partial_tu^-+\partial_x(\gamma
+u^-)=-\lambda^+[u^+,u^-]\lambda^-[u^+,u^-]u^-$$
+\noindent
+$\bold{u^+}$: right moving density of individual  \hspace{1cm} $\bold{u_-}$: left moving density of individual\\
+$\boldsymbol{\gamma}$: constant speed   \hspace{1cm} ${\boldsymbol{\lambda^+(\lambda_-)}}$:turning rate of original at right(left) to the left(right)
+
+\section{Model Description}
+\textbf{\large {2D model:}}
+$$\partial_t u 
++\gamma \boldsymbol{e}_\phi \cdot \nabla_x u
+=-\lambda(\boldsymbol{x}, \phi)u
++\int_{-\pi}^{\pi}T(\boldsymbol{x},\phi)u(\boldsymbol{x},\phi^{'},t)d\phi^'$$
+$u(\boldsymbol{x},\phi^{'},t)$ is the density of individuals at $\boldsymbol{x}=(x,y)$moving in the direction $\phi (-\pi,\pi])$ \\
+$\boldsymbol{\gamma}$: constant speed in the direction $\boldsymbol{e}_{/phi}=(cos\phi,sin\phi)$ \hspace{1cm}\\
+$\lambda(\boldsymbol{x}, \phi)$: reorientation rate of individuals at ($\boldsymbol{x},\phi$)\\
+$T(\boldsymbol{x},\phi)$: the rate of individuals at $x$ that changes their direction from $\phi^'$to $\phi$
+$$\lambda(\boldsymbol{x}, \phi)=\int_{-\pi}^{\pi}T(\boldsymbol{x},\phi)u(\boldsymbol{x},\phi^{'},t)d\phi^'$$
+\\
+\noindent
+\textbf{\large {Assumptions on $\lambda(\boldsymbol{x},\phi)$ and $T(\boldsymbol{x},\phi^{'},\phi)$}:}\\
+\noindent
+\large{1. Distance from neighbour}\\
+{\color{blue} \textbf{Distance kernel: what is distance kernel?}}\\
+$$K^d_j(\boldsymbol{x})=\frac{1}{A_j}e^{-(\sqrt{x^2+y^2}-d_{j})^2/m^2_j}$$ with $j=r,al,a$ and $d_j$ represents the ranges. \\
+$A_j$ ensures that each kernel integrates to 1:
+$$A_{j}=\pi m_{j}(m_{j}e^{-d_{j}^{2}/m_{j}^{2}}+\sqrt{\pi}d_{j}+\sqrt{\pi}d_{j}erf(d_{j}/m_{j}))$$
+where erf is error rate function. \\
+{\color{blue} \textbf{Figure 1b: superposition?}}\\
+\noindent
+\large {2. Neighbour's orientation}\\
+Can be described using rotation kernels dependent on the:\\
+\textbf{ reference individual: }movement direction $\phi$ and position $\boldsymbol{x}$\\
+\textbf{ reference individual's neighbour: }movement direction $\theta$ and position $\boldsymbol{s}$\\
+\\
+\noindent
+\textbf{\large {Modeling the turning rate $\lambda$}:}\\
+$q_j$ with $j=al,a,r$is a constant represents the strength of alignment, attraction and repulsion.
+\\
+\textbf{Alignment:}\\
+\textbf{Less} likely to change direction if their neighbours are going with the \textbf{same direction}.\\
+\textbf{More} likely to turn if their neighbours are going with \textbf{opposite direction}\\
+$$K^{o}_{al}(\theta;\phi)=\frac{1}{2\pi}(-cos(\phi-\theta)+1)$$
+If $\theta$ is very close to $\phi$, then $cos(\phi-\theta)$ will be closer to 1, and $(-cos(\phi-\theta)+1)$ will become 0.  $K^{o}_{al}(\theta;\phi)=0$\\
+If $\theta$ is completely opposite to $\phi$, then $cos(\phi-\theta)$ will be closer to -1, and $(-cos(\phi-\theta)+1)$ will become 2. $K^{o}_{al}(\theta;\phi)=1/\pi$\\
+o and d represents distance kernel and rotation kernel.
+$$\lambda_{al}(\boldsymbol{x},\phi)=
+q_{al}\int_{\mathbb{R}^2}\int^\pi_{-\pi}K^d_{al}(\boldsymbol{x}-\boldsymbol{s})K^o_{al}(\theta;\phi)u(\boldsymbol{s},\theta,t)d\theta d\boldsymbol{s}$$
+\\
+\\
+\textbf{Attraction:}\\
+Rotation mechanism depend on $\boldsymbol{x}$and $\boldsymbol{s}$ positions. Let $\boldsymbol{s}$ - $\boldsymbol{x}$=($s_x,s_y$), then we can get $\psi$ by 
+$$cos(\psi)=\frac{s_x}{\sqrt{s_x^2+s_y^2}},sin(\psi)=\frac{s_y}{\sqrt{s_x^2+s_y^2}}$$
+then we get 
+$$K^{o}_{a}(\boldsymbol{s};\boldsymbol{x},\phi)=\frac{1}{2\pi}(-cos(\phi-\psi)+1)$$
+If $\psi$ is very close to $\phi$, then $cos(\phi-\psi)$ will be closer to 1, and $(-cos(\phi-\psi)+1)$ will become 0.  $K^{o}_{a}(\boldsymbol{s};\boldsymbol{x},\phi)=0$\\
+If $\psi$ is completely opposite to $\phi$, then $cos(\phi-\psi)$ will be closer to -1, and $(-cos(\phi-\psi)+1)$ will become 2.
+$K^{o}_{a}(\boldsymbol{s};\boldsymbol{x},\phi)=1/\pi$
+$$\lambda_{a}(\boldsymbol{x},\phi)=
+q_{a}\int_{\mathbb{R}^2}\int^\pi_{-\pi}K^d_{a}(\boldsymbol{x}-\boldsymbol{s})K^{o}_{a}(\boldsymbol{s};\boldsymbol{x},\phi)u(\boldsymbol{s},\theta,t)d\theta d\boldsymbol{s}$$
+\\
+\\
+\textbf{Repulsion:}\\
+Totally opposite to the attraction pattern where
+$$K^{o}_{r}(\boldsymbol{s};\boldsymbol{x},\phi)=\frac{1}{2\pi}(cos(\phi-\psi)+1)$$
+where when the angle is closer, the more likely they are going to turn, an vice versa. 
+$$\lambda_{r}(\boldsymbol{x},\phi)=
+q_{r}\int_{\mathbb{R}^2}\int^\pi_{-\pi}K^d_{r}(\boldsymbol{x}-\boldsymbol{s})K^{o}_{r}(\boldsymbol{s};\boldsymbol{x},\phi)u(\boldsymbol{s},\theta,t)d\theta d\boldsymbol{s}$$
+\\
+\textbf{Sum All Together}\\
+$$\lambda(\boldsymbol{x},\phi)=\lambda_{al}(\boldsymbol{x},\phi)+\lambda_{a}(\boldsymbol{x},\phi)+\lambda_{r}(\boldsymbol{x},\phi)$$
+
+\noindent
+\textbf{\large {Modeling the reorientation terms}}
+\\
+$T(\boldsymbol{x},\phi^{'},\phi)$:\\
+Turning probability function:
+$\omega(\phi^{'}-\phi,\phi^{'}-\theta)$.\\
+$\omega$ represents the possibility of turning rate from direction $\phi^{'}$ to $\phi$ as a result of interactions with individuals located(moving) at direction $\theta$.
+And we get reorientation terms similar to the turning rate.\\
+$$T_{al}(\boldsymbol{x},\phi^{'},\phi)
+=q_{al}\int_{\mathbb{R}^2}\int^{\pi}_{\pi}K^{d}_{al}(\boldsymbol{x}-\boldsymbol{s})K^{o}_{al}(\theta;\phi)\omega_{al}(\phi^{'}-\phi,\phi^{'}-\theta)
+u(\boldsymbol{s},\theta,t)d\theta d\boldsymbol{s}$$
+$$T_{a}(\boldsymbol{x},\phi^{'},\phi)
+=q_{a}\int_{\mathbb{R}^2}\int^{\pi}_{\pi}K^{d}_{a}(\boldsymbol{x}-\boldsymbol{s})K^{o}_{a}(\boldsymbol{s};\boldsymbol{x},\phi^{'})\omega_{a}(\phi^{'}-\phi,\phi^{'}-\theta)
+u(\boldsymbol{s},\theta,t)d\theta d\boldsymbol{s}$$
+$$T_{r}(\boldsymbol{x},\phi^{'},\phi)
+=q_{r}\int_{\mathbb{R}^2}\int^{\pi}_{\pi}K^{d}_{r}(\boldsymbol{x}-\boldsymbol{s})K^{o}_{r}(\boldsymbol{s};\boldsymbol{x},\phi^{'})\omega_{r}(\phi^{'}-\phi,\phi^{'}-\theta)
+u(\boldsymbol{s},\theta,t)d\theta d\boldsymbol{s}$$
+And similar to the turning rate $\lambda$, the total term of $T$ is:
+$$T(\boldsymbol{x},\phi^{'},\phi)
+=T_{al}(\boldsymbol{x},\phi^{'},\phi)+T_{a}(\boldsymbol{x},\phi^{'},\phi)+T_{r}(\boldsymbol{x},\phi^{'},\phi)$$
+{\color{blue} \textbf{What is the reorientation term? What does this term represent?}}\\
+\textbf{\large {Modeling the probability function $\omega_{al}, \omega_{a}$ and $\omega_{r}$}}
+$$\omega(\phi^{'}-\phi,\phi^{'}-\theta)
+=g_{\sigma}(\phi^{'}-\phi-v(\phi^{'}-\theta))$$
+$g_\sigma$ is an approximation of the delta function with width $\sigma$\\
+$v$ is the turning function with highest possibility of an individual moving in the direction $\phi^{'}$ turns to $\phi=\phi{'}-v(\phi^{'}-\theta)$
+{\color{blue} \textbf{What is turning function?}}\\
+$\sigma>0$ is the uncertainty of turning. \\
+Possible expressions for $g_\sigma$ are a \textbf{periodic Gaussian function} or a \textbf{Normalized step function}:
+$$g_{\sigma}(\theta)=
+\frac{1}{\sqrt{\pi}\sigma}\sum_{z\in \mathbb{Z}}e^{{-(\frac{\theta+2\pi z}{\sigma})}^2}, \theta \in (-\pi,\pi)$$
+what is z above? 
+\begin{equation}
+  g_{\sigma} =
+    \begin{cases}
+    \frac{1}{2\sigma}, |\theta|<\sigma\\
+      0 \sigma<|\theta|<=\pi
+    \end{cases}       
+\end{equation}
+Turning function $v$:
+$$v(\theta)=\kappa sin(\theta)$$
+$$v(\theta)=\kappa \theta), -1<=\kappa<=1$$
+Sign of $\kappa$ is very important. if $\kappa$ is negative, then it is \textbf{repulsive turning}, if $\kappa$ is positive, then it is \textbf{attracting-like turning}. 
+
+\section{Numerical results}
+Use Fourier Methods to calculate the convolution integral for space and angle. \\
+{\color{blue} \textbf{What does it mean by "performs a multiplication in the discrete Fourier transform"?} $$\widehat{K*u(l)}=\hat{K}(l)\hat{u}(l)$$ }\\
+Apply 2D Fourier transform to $\gamma \boldsymbol{e}_\phi \cdot \nabla_x u$ and then obtain $$\gamma(cos \phi l_1 + sin \phi l_2)\hat{u}$$ 
+where $l_1 and l_2$ are horizontal and vertical components of the wave number.
+\par
+Use the \textbf{4th Runge-Kutta Method} to solve for the numerical solution.\\
+\textbf{Space discretization:} rectangular grid on $[-L/2,L/2)\times [-L/2,L/2)$ with $N^2$ points, with $\Delta x=\Delta y=L/N$\\
+\textbf{Angle discretization:} equidistant grid on [$-\pi$, $\pi$) with M points, $\Delta \phi = 2 *\pi / M$\\
+
+To avoid aliasing, all multiplications of Fourier modes are done on an extended spatial grid of size $(\frac{3}{2} N)^2$ and an angular gird of size $\frac{3}{2} M$. 
+
+\textbf{Discrete Convolutions to compute turning rates}\\
+The integral defining $\lambda _ {al}$ is trivial to compute its discrete Fourier Spectrum. \\
+The integrals that define $\lambda _ a$ and $\lambda _ r$ are similar and can represent a convolution in space only. What we get is 
+$$\lambda_{r}(\boldsymbol{x},\phi)=
+q_{r}\int_{\mathbb{R}^2}K^d_{r}(\boldsymbol{x}-\boldsymbol{s})K^{o}_{r}(\boldsymbol{s};\boldsymbol{x},\phi)\int^\pi_{-\pi} u(\boldsymbol{s},\theta,t)d\theta d\boldsymbol{s}$$
+The $\theta$ integral is the zero mode of u, and the remaining space integral is a convolution. 
+\textbf{Calculation of the reorientation terms included in T}\\
+We can change $T_a(\boldsymbol{x}, \phi ', \phi)$ and $T_r(\boldsymbol{x}, \phi ', \phi)$ in space only. For every $\phi$ and $\phi '$ fixed, then we get 
+$$\omega_{a}(\phi-\phi',\phi ' -\psi)=g \sigma_{a}(\phi ' - \phi - \kappa_{a}sin(\phi ' -\psi))$$
+$$=g \sigma_{a}(\phi ' - \phi - \kappa_{a}(sin\phi 'cos\psi-cos\phi ' sin\psi)$$
+$$=g \sigma_{a}(\phi ' - \phi - \kappa_{a}(sin\phi '\frac{s_{x}}{s_{x}^{2}+s_{y}^{2}}-cos\phi ' \frac{s_{y}}{s_{y}^{2}+s_{x}^{2}}))$$
+which is a function of $\boldsymbol{x}-\boldsymbol{s}$, which means it is a convolution is the space only. 
+
+
+\end{document}
