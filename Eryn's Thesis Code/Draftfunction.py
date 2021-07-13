@@ -3,6 +3,9 @@ from numpy import *
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
 from numpy import linalg as LA
+from grid_setup import *
+from fouriergrid_setup import *
+from newtimestep import *
 
 # Set up initial data:
 N = 64
@@ -40,14 +43,14 @@ tmax =1
 nplt = floor((tmax/0.01)/dt)
 nmax = int(round(tmax/dt))
 
-for t in range(1,nmax+1):
-    for q in range(1, m):
+for t in range(0,nmax):
+    for q in range(0, m-1):
         F=F_list[q]
         p=q-1
         r=q+1
-        if q==1:
-            p=m
-        if q==m:
+        if q==0:
+            p=m-1
+        if q==m-1:
             r=1
         uq_hat=u_hat[q]
         ur_hat=u_hat[r]
