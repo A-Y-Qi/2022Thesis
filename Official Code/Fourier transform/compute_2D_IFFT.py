@@ -7,7 +7,6 @@ from numpy import linalg as LA
 
 def ifft_2D(matrixin2D, N):
         ##set up a new 3d matrix
-        IFFT_temp=matrixin2D
         IFFT_2D=zeros((N, N))
         ##then apply FFT to each row and column
         #take out and operate on the rows first
@@ -30,6 +29,43 @@ def ifft_2D(matrixin2D, N):
                 IFFT_2D[:,j]=(N/(2*pi))*IFFT_column_real
                 #Now the matrix_fft has applied FFT twice
         return IFFT_2D
+
+#def ifft_2D_3DM(matrixin3D, N):
+        ###set up a new 3d matrix
+        #IFFT_3D=array(real(matrixin3D))
+        #matrixin3D=array(matrixin3D)
+        ###then apply FFT to each row and column
+        ##take out and operate on the rows first
+        #for i in range (0,N):
+                #matrixin2D=matrixin3D[i,:,:]
+                #for j in range(0, N):
+                        #row=matrixin2D[j,:]
+                        #IFFT_row=zeros(N)
+                        #IFFT_row=fft.ifft(fft.ifftshift(row))
+                        ##IFFT_row=fft.ifft(row)
+                        ###Add normalization (2pi period)
+                        #IFFT_row_real=real(IFFT_row)
+                        #IFFT_3D[i,j]=(N/(2*pi))*IFFT_row_real
+                        ##take out and operate on the columns next
+                #for k in range(0, N):
+                        #column=IFFT_3D[i,:,k]
+                        #IFFT_column=zeros(N)
+                        #IFFT_column=fft.ifft(fft.ifftshift(column))
+                        ##IFFT_column=fft.ifft(column)
+                        ###Add normalization (2pi period)
+                        #IFFT_column_real=real(IFFT_column)
+                        #IFFT_3D[i,:,k]=(N/(2*pi))*IFFT_column_real
+                        ##Now the matrix_fft has applied FFT twice
+        #return IFFT_3D
+
+def ifft_2D_3DM(matrixin3D, N):
+        ##set up a new 3d matrix
+        IFFT_3D=array(real(matrixin3D))
+        ##then apply FFT to each row and column
+        #take out and operate on the rows first
+        for i in range (0,N):
+                IFFT_3D[i,:,:]=real(fft.ifft2(fft.ifftshift(matrixin3D[i,:,:])))
+        return IFFT_3D
 
 
 
