@@ -56,13 +56,11 @@ def fft_2D(matrixin2D, N):
                         ##Now the matrix_fft has applied FFT twice
         #return matrix_fft
 
-##Debug use
-
 def fft_2D_3DM(matrixin3D, N):
         ##set up a new 3d matrix
         matrix_fft=array(matrixin3D).astype(complex)
         for i in range (0,N):
-                matrix_fft[i,:,:]=fft.fftshift(fft.fft2(matrixin3D[i,:,:]))
+                matrix_fft[i,:,:]=((2*pi/N))**2*fft.fftshift(fft.fft2(matrixin3D[i,:,:]))
         return matrix_fft
 
 
