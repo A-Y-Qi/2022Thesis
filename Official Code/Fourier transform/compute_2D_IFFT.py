@@ -64,7 +64,7 @@ def ifft_2D_3DM(matrixin3D, N):
         ##then apply FFT to each row and column
         #take out and operate on the rows first
         for i in range (0,N):
-                IFFT_3D[i,:,:]=real(fft.ifft2(fft.ifftshift(matrixin3D[i,:,:])))
+                IFFT_3D[i,:,:]=(((N/(2*pi)))**2)*real(fft.ifft2(fft.ifftshift(matrixin3D[i,:,:])))
         return IFFT_3D
 
 
