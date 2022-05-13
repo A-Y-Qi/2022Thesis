@@ -32,7 +32,7 @@ def Kernel_o(N,a_or_r):
             for l in range (0,N):
                 if Sx[l]==Sy[k] and Sx[k]==0:
                     if a_or_r=="r":
-                        psi=phi[i]+pi
+                        psi=phi[i]
                     elif a_or_r=="a":
                         psi=phi[i]
                 else:
