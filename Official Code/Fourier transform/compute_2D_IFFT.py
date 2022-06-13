@@ -57,8 +57,10 @@ def ifft_2D(matrixin2D, N):
                         #IFFT_3D[i,:,k]=(N/(2*pi))*IFFT_column_real
                         ##Now the matrix_fft has applied FFT twice
         #return IFFT_3D
-
-def ifft_2D_3DM(matrixin3D, N):
+        
+        
+        
+def ifft_2D_3DM(matrixin3D, sign_matrix, N):
         ##set up a new 3d matrix
         IFFT_3D=array(real(matrixin3D))
         ##then apply FFT to each row and column
@@ -66,6 +68,16 @@ def ifft_2D_3DM(matrixin3D, N):
         for i in range (0,N):
                 IFFT_3D[i,:,:]=(((N/(2*pi)))**2)*real(fft.ifft2(fft.ifftshift(matrixin3D[i,:,:])))
         return IFFT_3D
+
+def ifft_2D_4DM(matrixin4D,sign_matrix, N):
+        ##set up a new 3d matrix
+        IFFT_4D=array(real(matrixin4D))
+        ##then apply FFT to each row and column
+        #take out and operate on the rows first
+        for i in range (0,N):
+                for k in range (0,N):
+                        IFFT_4D[i,k,:,:]=(((N/(2*pi)))**2)*real(fft.ifft2(fft.ifftshift(matrixin4D[i,k,:,:])))
+        return IFFT_4D
 
 
 
