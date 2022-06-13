@@ -4,6 +4,13 @@ from mpl_toolkits.mplot3d import axes3d
 from numpy import linalg as LA
 
 
+def sign_M(N):
+    sample_2D=zeros((N, N))
+    sign_matrix=copy(sample_2D)
+    w_number_sign=(-1)**(arange(-N/2.0,N/2.0)+1)
+    for i in range (0,N):
+        sign_matrix[:,i]=w_number_sign[i]*w_number_sign
+    return sign_matrix
 
 def fft_2D(matrixin2D, N):
         ##set up a new 3d matrix
