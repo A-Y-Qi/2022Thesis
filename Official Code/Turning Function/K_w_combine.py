@@ -4,6 +4,7 @@ from mpl_toolkits.mplot3d import axes3d
 from numpy import linalg as LA
 from scipy import special
 from matplotlib import *
+from compute_2D_FFT import *
 
 def Kernel_d(N,m,d):
     #define x and y
@@ -137,20 +138,142 @@ def w_possibility(N, sigma,kk,a_or_r):
                         w_func_4D[i,j,k,l]=0
     return w_func_4D
 
+
+
 #=====================Kw_combined function =============================#
 #All variables are defined inside of the functions
 #m,d are defined in Kernel
 #sigma kk are defined in K_w
 
+#def K_w(N,a_or_r):
+    #sigma=pi/8
+    #kk=1
+    #Kernel_func=Kernel(N,a_or_r)
+    #w_func=w_possibility(N, sigma,kk,a_or_r)
+    #Kw_func_4D=copy(w_func)
+    #for i in range (0,N):
+        #for j in range (0,N):
+            #for k in range (0,N):
+                #for l in range (0,N):
+                    #Kw_func_4D[i,j,k,l]=Kernel_func[j,k,l]*w_func[i,j,k,l]
+    #return Kw_func_4D  
+
 def K_w(N,a_or_r):
     sigma=pi/8
     kk=1
     Kernel_func=Kernel(N,a_or_r)
-    w_func=w_possibility(N, sigma,kk,a_or_r)
-    Kw_func_4D=copy(w_func)
+    phi_prime = (2*pi/N)*arange(-N/2.0,N/2.0)
+    phi = (2*pi/N)*arange(-N/2.0,N/2.0)
+    #define Sx and Sy
+    Sx = (2*pi/N)*arange(-N/2.0,N/2.0)
+    Sy = (2*pi/N)*arange(-N/2.0,N/2.0) 
+    #a or r
+    if a_or_r=="a":
+        kk=abs(kk)
+    if a_or_r=="r":
+        kk=-abs(kk)
+    #set up frame
+    w_func_2D = array(zeros((N,N)))
+    w_func_3D=[]
+    for i in range (0,N):
+        array(w_func_3D.append(w_func_2D))  
+    Kw_func_4D=[]
+    for i in range (0,N):
+        array(Kw_func_4D.append(w_func_3D))
+    Kw_func_4D=array(Kw_func_4D)
     for i in range (0,N):
         for j in range (0,N):
             for k in range (0,N):
                 for l in range (0,N):
-                    Kw_func_4D[i,j,k,l]=Kernel_func[j,k,l]*w_func[i,j,k,l]
-    return Kw_func_4D
+                    Sxx=Sx[l]
+                    Syy=Sy[k]
+                    phi_prime_temp=phi_prime[j]
+                    phi_temp=phi[i]
+                    if Sxx==Syy and Sxx==0:
+                        psi=phi_prime_temp   
+                    else:
+                        psi=arccos(Sxx/(sqrt((Sxx**2)+(Syy**2))))
+                    if Syy<0:
+                        psi=-psi
+                    v_angle=phi_prime_temp-psi 
+                    if v_angle>=pi:
+                        v_angle=v_angle-2*pi
+                    elif v_angle<=-pi:
+                        v_angle=v_angle+2*pi
+                    v=kk*v_angle 
+                    phi_angle=phi_prime_temp-phi_temp
+                    if phi_angle>=pi:
+                        phi_angle=phi_angle-2*pi
+                    elif phi_angle<=-pi:
+                        phi_angle=phi_angle+2*pi                    
+                    theta=phi_angle-v
+                    if theta>=pi:
+                        theta=theta-2*pi
+                    elif theta<=-pi:
+                        theta=theta+2*pi
+                    if abs(theta)<=sigma:
+                        Kw_func_4D[i,j,k,l]=1/(2*sigma)*Kernel_func[j,k,l]
+                    else:
+                        Kw_func_4D[i,j,k,l]=0   
+    return Kw_func_4D    
+    
+def K_w_fft(N,a_or_r):
+    sigma=pi/8
+    kk=1
+    Kernel_func=Kernel(N,a_or_r)
+    phi_prime = (2*pi/N)*arange(-N/2.0,N/2.0)
+    phi = (2*pi/N)*arange(-N/2.0,N/2.0)
+    #define Sx and Sy
+    Sx = (2*pi/N)*arange(-N/2.0,N/2.0)
+    Sy = (2*pi/N)*arange(-N/2.0,N/2.0) 
+    #a or r
+    if a_or_r=="a":
+        kk=abs(kk)
+    if a_or_r=="r":
+        kk=-abs(kk)
+    #set up frame
+    w_func_2D = array(zeros((N,N)))
+    w_func_3D=[]
+    for i in range (0,N):
+        array(w_func_3D.append(w_func_2D))  
+    Kw_func_4D=[]
+    for i in range (0,N):
+        array(Kw_func_4D.append(w_func_3D))
+    Kw_func_4D=array(Kw_func_4D)
+    Kw_func_4D_fft=array(Kw_func_4D).astype(complex)
+    for i in range (0,N):
+        for j in range (0,N):
+            for k in range (0,N):
+                for l in range (0,N):
+                    Sxx=Sx[l]
+                    Syy=Sy[k]
+                    phi_prime_temp=phi_prime[j]
+                    phi_temp=phi[i]
+                    if Sxx==Syy and Sxx==0:
+                        psi=phi_prime_temp   
+                    else:
+                        psi=arccos(Sxx/(sqrt((Sxx**2)+(Syy**2))))
+                    if Syy<0:
+                        psi=-psi
+                    v_angle=phi_prime_temp-psi 
+                    if v_angle>=pi:
+                        v_angle=v_angle-2*pi
+                    elif v_angle<=-pi:
+                        v_angle=v_angle+2*pi
+                    v=kk*v_angle 
+                    phi_angle=phi_prime_temp-phi_temp
+                    if phi_angle>=pi:
+                        phi_angle=phi_angle-2*pi
+                    elif phi_angle<=-pi:
+                        phi_angle=phi_angle+2*pi                    
+                    theta=phi_angle-v
+                    if theta>=pi:
+                        theta=theta-2*pi
+                    elif theta<=-pi:
+                        theta=theta+2*pi
+                    if abs(theta)<=sigma:
+                        Kw_func_4D[i,j,k,l]=1/(2*sigma)*Kernel_func[j,k,l]
+                    else:
+                        Kw_func_4D[i,j,k,l]=0
+    Kw_func_4D_fft=fft_2D_4DM(Kw_func_4D,N)*sign_M(N)
+    return Kw_func_4D_fft
