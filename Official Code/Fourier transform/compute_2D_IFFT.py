@@ -4,6 +4,13 @@ from mpl_toolkits.mplot3d import axes3d
 from numpy import linalg as LA
 
 
+def sign_M(N):
+    sample_2D=zeros((N, N))
+    sign_matrix=copy(sample_2D)
+    w_number_sign=(-1)**(arange(-N/2.0,N/2.0)+1)
+    for i in range (0,N):
+        sign_matrix[:,i]=w_number_sign[i]*w_number_sign
+    return sign_matrix
 
 def ifft_2D(matrixin2D, N):
         ##set up a new 3d matrix
@@ -66,7 +73,7 @@ def ifft_2D_3DM(matrixin3D, sign_matrix, N):
         ##then apply FFT to each row and column
         #take out and operate on the rows first
         for i in range (0,N):
-                IFFT_3D[i,:,:]=(((N/(2*pi)))**2)*real(fft.ifft2(fft.ifftshift(matrixin3D[i,:,:])))
+                IFFT_3D[i,:,:]=(((N/(2*pi)))**2)*real(fft.ifft2(fft.ifftshift(matrixin3D[i,:,:])))*sign_matrix
         return IFFT_3D
 
 def ifft_2D_4DM(matrixin4D,sign_matrix, N):
@@ -76,7 +83,7 @@ def ifft_2D_4DM(matrixin4D,sign_matrix, N):
         #take out and operate on the rows first
         for i in range (0,N):
                 for k in range (0,N):
-                        IFFT_4D[i,k,:,:]=(((N/(2*pi)))**2)*real(fft.ifft2(fft.ifftshift(matrixin4D[i,k,:,:])))
+                        IFFT_4D[i,k,:,:]=(((N/(2*pi)))**2)*real(fft.ifft2(matrixin4D[i,k,:,:]))*sign_matrix
         return IFFT_4D
 
 
