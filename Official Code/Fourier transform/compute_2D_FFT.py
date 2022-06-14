@@ -7,7 +7,7 @@ from numpy import linalg as LA
 def sign_M(N):
     sample_2D=zeros((N, N))
     sign_matrix=copy(sample_2D)
-    w_number_sign=(-1)**(arange(-N/2.0,N/2.0)+1)
+    w_number_sign=fft.ifftshift((-1)**(arange(-N/2.0,N/2.0)+1))
     for i in range (0,N):
         sign_matrix[:,i]=w_number_sign[i]*w_number_sign
     return sign_matrix
@@ -37,32 +37,6 @@ def fft_2D(matrixin2D, N):
                 #Now the matrix_fft has applied FFT twice
         return FFT_2D
 
-#def fft_2D_3DM(matrixin3D, N):
-        ###set up a new 3d matrix
-        #matrix_fft=array(matrixin3D).astype(complex)
-        #matrixin3D=array(matrixin3D)
-        ###then apply FFT to each row and column
-        ##take out and operate on the rows first
-        #for i in range (0,N):
-                #matrixin2D=matrixin3D[i,:,:]
-                #for j in range(0, N):
-                        #row=matrixin2D[j,:]
-                        #FFT_row=zeros(N, dtype=complex)
-                        #FFT_row=fft.fftshift(fft.fft(row))
-                        ##FFT_row[-1]=FFT_row[zero_wnum_index]
-                        ###Add normalization (2pi period)
-                        #matrix_fft[i,j,:]=(2*pi/N)*FFT_row
-                        ##take out and operate on the columns next
-                #for k in range(0, N):
-                        #column=matrix_fft[i,:,k]
-                        #FFT_row=zeros(N, dtype=complex)
-                        #FFT_column=fft.fftshift(fft.fft(column))
-                        ##FFT_column[-1]=FFT_column[zero_wnum_index]
-                        ###Add normalization (2pi period)
-                        #matrix_fft[i,:,k]=(2*pi/N)*FFT_column
-                        ##Now the matrix_fft has applied FFT twice
-        #return matrix_fft
-
 def fft_2D_3DM(matrixin3D, sign_matrix, N):
         ##set up a new 3d matrix
         matrix_fft=array(matrixin3D).astype(complex)
@@ -80,9 +54,3 @@ def fft_2D_4DM(matrixin4D,sign_matrix, N):
                         matrix_fft[i,k,:,:]=(((2*pi/N))**2)*fft.fft2(matrixin4D[i,k,:,:])*sign_matrix
                 
         return matrix_fft
-
-
-
-
-            
-
