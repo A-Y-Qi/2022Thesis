@@ -138,25 +138,11 @@ def w_possibility(N, sigma,kk,a_or_r):
                         w_func_4D[i,j,k,l]=0
     return w_func_4D
 
-
-
 #=====================Kw_combined function =============================#
 #All variables are defined inside of the functions
 #m,d are defined in Kernel
 #sigma kk are defined in K_w
 
-#def K_w(N,a_or_r):
-    #sigma=pi/8
-    #kk=1
-    #Kernel_func=Kernel(N,a_or_r)
-    #w_func=w_possibility(N, sigma,kk,a_or_r)
-    #Kw_func_4D=copy(w_func)
-    #for i in range (0,N):
-        #for j in range (0,N):
-            #for k in range (0,N):
-                #for l in range (0,N):
-                    #Kw_func_4D[i,j,k,l]=Kernel_func[j,k,l]*w_func[i,j,k,l]
-    #return Kw_func_4D  
 
 def K_w(N,a_or_r):
     sigma=pi/8
@@ -217,7 +203,7 @@ def K_w(N,a_or_r):
                         Kw_func_4D[i,j,k,l]=0   
     return Kw_func_4D    
     
-def K_w_fft(N,a_or_r):
+def K_w_fft(N,sign_matrix,a_or_r):
     sigma=pi/8
     kk=1
     Kernel_func=Kernel(N,a_or_r)
@@ -275,217 +261,6 @@ def K_w_fft(N,a_or_r):
                         Kw_func_4D[i,j,k,l]=1/(2*sigma)*Kernel_func[j,k,l]
                     else:
                         Kw_func_4D[i,j,k,l]=0
-    Kw_func_4D_fft=fft_2D_4DM(Kw_func_4D,N)*sign_M(N)
+    Kw_func_4D_fft=fft_2D_4DM(Kw_func_4D,sign_matrix,N)
     return Kw_func_4D_fft
     
-   
-    
-
-##grid_setup
-#N=32
-#position = (2*pi/N)*arange(-N/2.0,N/2.0)
-#X,Y=meshgrid(position,position)
-
-##function
-
-#Kw_attr=K_w(N,"a")
-#Kw_rep=K_w(N,"a")
-##Kw_attr=load("Kw_attr.npy")
-##Kw_rep=load("Kw_rep.npy")
-##w_rep=load("w_rep.npy")
-##w_attr=load("w_attr.npy")
-##K_attr=Kernel(N,"a")
-##K_rep=Kernel(N,"r")
-
-
-##========================test 1================================#
-#angle=16
-#angle_prime=0
-###Figure
-#fig1 = plt.figure()
-#ax1 = fig1.gca()
-#con1=ax1.contourf(X, Y, Kw_rep[angle,angle_prime], cmap="coolwarm")
-#fig1.colorbar(con1)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax1.set_xlabel('x')
-#ax1.set_ylabel('y')
-#plt.suptitle("The Repulsion K_w function at angle position phi'="+str(position[angle_prime])[:6]+" phi=" + str(position[angle])[:6])
-
-#angle=0
-#fig2 = plt.figure()
-#ax2 = fig2.gca()
-#con2=ax2.contourf(X, Y, Kw_rep[angle,angle_prime], cmap="coolwarm")
-#fig2.colorbar(con2)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax2.set_xlabel('x')
-#ax2.set_ylabel('y')
-#plt.suptitle("The Repulsion K_w function at angle position phi'="+str(position[angle_prime])[:6]+" phi=" + str(position[angle])[:6])
-
-#fig3 = plt.figure()
-#ax3 = fig3.gca()
-#con3=ax3.contourf(X, Y, K_rep[angle_prime], cmap="coolwarm")
-#fig3.colorbar(con3)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax3.set_xlabel('x')
-#ax3.set_ylabel('y')
-#plt.suptitle("The Repulsion Kernel at angle position phi'="+str(position[angle_prime])[:6])
-
-##========================test 2================================#
-#angle=12
-#angle_prime=12
-###Figure
-#fig4 = plt.figure()
-#ax4 = fig4.gca()
-#con4=ax4.contourf(X, Y, Kw_rep[angle,angle_prime], cmap="coolwarm")
-#fig4.colorbar(con4)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax4.set_xlabel('x')
-#ax4.set_ylabel('y')
-#plt.suptitle("The Repulsion K_w function at angle position phi'="+str(position[angle_prime])[:6]+" phi=" + str(position[angle])[:6])
-
-#angle=28
-#fig5 = plt.figure()
-#ax5 = fig5.gca()
-#con5=ax5.contourf(X, Y, Kw_rep[angle,angle_prime], cmap="coolwarm")
-#fig5.colorbar(con5)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax5.set_xlabel('x')
-#ax5.set_ylabel('y')
-#plt.suptitle("The Repulsion K_w function at angle position phi'="+str(position[angle_prime])[:6]+" phi=" + str(position[angle])[:6])
-
-##fig6 = plt.figure()
-##ax6 = fig6.gca()
-##con6=ax6.contourf(X, Y, w_attr[angle,angle_prime], cmap="coolwarm")
-##fig6.colorbar(con6)
-###ax1.contourf(X,Y,Z)
-###ax1.set_zlim(0,400)
-##ax6.set_xlabel('x')
-##ax6.set_ylabel('y')
-##plt.suptitle("The Repulsion Kernel at angle position phi'="+str(position[angle_prime])[:6])
-
-###========================test 3================================#
-#angle=24
-#angle_prime=24
-###Figure
-#fig7 = plt.figure()
-#ax7 = fig7.gca()
-#con7=ax7.contourf(X, Y, Kw_attr[angle,angle_prime], cmap="coolwarm")
-#fig7.colorbar(con7)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax7.set_xlabel('x')
-#ax7.set_ylabel('y')
-#plt.suptitle("The Repulsion K_w function at angle position phi'="+str(position[angle_prime])[:6]+" phi=" + str(position[angle])[:6])
-
-#angle=8
-#fig8 = plt.figure()
-#ax8 = fig8.gca()
-#con8=ax8.contourf(X, Y, Kw_attr[angle,angle_prime], cmap="coolwarm")
-#fig8.colorbar(con8)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax8.set_xlabel('x')
-#ax8.set_ylabel('y')
-#plt.suptitle("The Repulsion K_w function at angle position phi'="+str(position[angle_prime])[:6]+" phi=" + str(position[angle])[:6])
-
-#fig2 = plt.figure()
-#ax2 = fig2.gca()
-#angle=4
-#con2=ax2.contourf(X, Y, Kernel_rep[angle], cmap="coolwarm")
-#fig2.colorbar(con2)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax2.set_xlabel('x')
-#ax2.set_ylabel('y')
-#plt.suptitle("The Repulsion Kernel of the individual at angle position phi="+str(position[angle])[:6])
-
-#fig3 = plt.figure()
-#ax3 = fig3.gca()
-#angle=8
-#con3=ax3.contourf(X, Y, Kernel_rep[angle], cmap="coolwarm")
-#fig3.colorbar(con3)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax3.set_xlabel('x')
-#ax3.set_ylabel('y')
-#plt.suptitle("The Repulsion Kernel of the individual at angle position phi="+str(position[angle])[:6])
-
-#fig4 = plt.figure()
-#ax4 = fig4.gca()
-#angle=12
-#con4=ax4.contourf(X, Y, Kernel_rep[angle], cmap="coolwarm")
-#fig4.colorbar(con4)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax4.set_xlabel('x')
-#ax4.set_ylabel('y')
-#plt.suptitle("The Repulsion Kernel of the individual at angle position phi="+str(position[angle])[:6])
-
-#fig5 = plt.figure()
-#ax5 = fig5.gca()
-#angle=16
-#con5=ax5.contourf(X, Y, Kernel_rep[angle], cmap="coolwarm")
-#fig5.colorbar(con5)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax5.set_xlabel('x')
-#ax5.set_ylabel('y')
-#plt.suptitle("The Repulsion Kernel of the individual at angle position phi="+str(position[angle])[:6])
-
-#fig6 = plt.figure()
-#ax6 = fig6.gca()
-#angle=20
-#con6=ax6.contourf(X, Y, Kernel_rep[angle], cmap="coolwarm")
-#fig6.colorbar(con6)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax6.set_xlabel('x')
-#ax6.set_ylabel('y')
-#plt.suptitle("The Repulsion Kernel of the individual at angle position phi="+str(position[angle])[:6])
-
-#fig7 = plt.figure()
-#ax7 = fig7.gca()
-#angle=24
-#con7=ax7.contourf(X, Y, Kernel_rep[angle], cmap="coolwarm")
-#fig7.colorbar(con7)
-##ax1.contourf(X,Y,Z)
-##ax1.set_zlim(0,400)
-#ax6.set_xlabel('x')
-#ax6.set_ylabel('y')
-#plt.suptitle("The Repulsion Kernel of the individual at angle position phi="+str(position[angle])[:6])
-
-
-##Animation use
-#fig10 = plt.figure()
-##ax10 = fig10.gca(projection='3d')
-#ax10 = fig10.gca()
-##timestep_number=99
-
-#count = 0
-#angle_prime=22
-#levels = linspace(0,1,100)
-#def animate2(i):
-    #global count
-    #Z2=Kw_attr[count,angle_prime]
-    #count += 1
-    #ax10.clear()
-    ##ax10.plot_surface(X,Y,Z2,rstride=1, cstride=1,cmap=plt.cm.jet,linewidth=0,antialiased=False)
-    #ax10.contourf(X,Y,Z2,levels=levels,cmap=plt.cm.turbo)
-    ##ax10.set_zlim(0,3)
-    #ax10.set_xlabel('x')
-    #ax10.set_ylabel('y')
-    ##ax1.view_init(90, 90)
-    ##plt.suptitle("Simulation using Matrix when N="+str(N)+" phi="+str(position[kk])+" dt="+str(dt))
-    #if count >= N:
-        #count=0
-
-##ax10.view_init(90, 90)
-#anim10 = animation.FuncAnimation(fig10,animate2)
-#plt.show()    
-
-
