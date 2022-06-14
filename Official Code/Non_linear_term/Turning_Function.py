@@ -4,9 +4,8 @@ from mpl_toolkits.mplot3d import axes3d
 from numpy import linalg as LA
 from scipy import special
 from compute_2D_FFT import *
-from compute_3D_FFT import *
 from compute_2D_IFFT import *
-from Kw_combined_debug import *
+from Kw_combined import *
 from scipy import signal as sig
 
 #q: a constant
