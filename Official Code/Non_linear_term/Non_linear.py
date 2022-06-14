@@ -4,13 +4,14 @@ from mpl_toolkits.mplot3d import axes3d
 from numpy import linalg as LA
 from scipy import special
 from matplotlib import *
-from Turning_Function import *
-from Kw_combined import *
+from Debug_use_Turning_Function import *
+from Kw_combined_debug import *
+from compute_2D_FFT import *
 
 def saturation(T,N):
     saturation_T=copy(T)
     #saturation_T=(1+tanh((T-700)/100))*0.5
-    saturation_T=(1+tanh((T-2*pi)))*0.5
+    saturation_T=(1+tanh((T-amax(T)*0.5)*(1/(0.25*amax(T)))))*0.5
     return saturation_T
 
 
