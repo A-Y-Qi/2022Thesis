@@ -11,7 +11,7 @@ def Kernel_d(N,m,d):
     x = (2*pi/N)*arange(-N/2.0,N/2.0)
     y = (2*pi/N)*arange(-N/2.0,N/2.0)
     #define constant A
-    A=m*(m*exp(-(d**2)/(m**2))+d+d*special.erf(d/m))
+    A=pi*m*(m*exp(-(d**2)/(m**2))+d*sqrt(pi)+d*sqrt(pi)*special.erf(d/m))
     #Generate a 2*2 matrix
     Kernel_d_func = zeros((N,N))
     for i in range (0,N):
