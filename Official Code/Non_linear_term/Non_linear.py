@@ -16,38 +16,12 @@ def saturation(T,N):
 
 
 
-def S_u(N, T, u):
-    Saturation=array(saturation(T,N))
-    u=array(u)
-    temp_2D=array(zeros((N,N)))
-    temp_3D=[]
-    for i in range (0,N):
-        array(temp_3D.append(temp_2D))
-    temp_4D=[]
-    for i in range (0,N):
-        array(temp_4D.append(temp_3D))
-    temp_4D=array(temp_4D)
-    S_u=temp_4D
-    for i in range (0,N):
-        for j in range (0,N):
-            S_temp=Saturation[i,j]
-            u_temp=u[j]
-            S_u_temp=S_temp*u_temp
-            S_u[i,j]=S_u_temp
-    return S_u
-
 def Nonlin_in(N, T, u):
     Saturation=array(saturation(T,N))
     u=array(u)
     temp_2D=array(zeros((N,N)))
-    temp_3D=[]
-    for i in range (0,N):
-        temp_3D.append(temp_2D)
-    temp_4D=[]
-    for i in range (0,N):
-        temp_4D.append(temp_3D)
-    temp_4D=array(temp_4D)
-    temp_3D=array(temp_3D)
+    temp_3D=array(zeros((N,N,N)))
+    temp_4D=array(zeros((N,N,N,N)))
     S_u=temp_4D
     for i in range (0,N):
         for j in range (0,N):
@@ -62,9 +36,7 @@ def Nonlin_in(N, T, u):
 def Nonlin_out(N, T, u):
     Saturation=array(saturation(T,N))
     temp_2D=array(zeros((N,N)))
-    temp_3D=[]
-    for i in range (0,N):
-        temp_3D.append(temp_2D)
+    temp_3D=array(zeros((N,N,N)))
     lamb=array(temp_3D)
     for i in range (0,N):
         for k in range (0,N):
