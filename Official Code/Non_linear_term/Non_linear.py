@@ -9,9 +9,14 @@ from Kw_combined import *
 from compute_2D_FFT import *
 
 def saturation(T,N):
+    #function centered at a
+    a=50
+    #Slope of the saturation function 
+    b=1
+    #highest value is 2*c
+    c=50
     saturation_T=copy(T)
-    #saturation_T=(1+tanh((T-700)/100))*0.5
-    saturation_T=(1+tanh((T-amax(T)*0.5)*(1/(0.25*amax(T)))))*0.5
+    saturation_T=(1+tanh((T-a)*b)))*c
     return saturation_T
 
 
