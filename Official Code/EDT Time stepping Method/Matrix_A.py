@@ -23,7 +23,6 @@ def diagonal_matrixA(N,k,l,gamma,dt):
     result=ones(N).astype(complex)
     for i in range (0,N):
         theta=phi[i]
-        const=exp(-1j*gamma*(kk*cos(theta)+ll*sin(theta))*dt)
-        #const=exp(-1j*gamma*(k*cos(theta)+l*(sin(theta)))*dt)
+        const=exp(-1j*gamma*(ll*cos(theta)+kk*sin(theta))*dt)
         result[i]=const
     return result
