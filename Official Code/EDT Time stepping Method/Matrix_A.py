@@ -1,12 +1,4 @@
 from numpy import *
-from matplotlib import pyplot as plt
-from mpl_toolkits.mplot3d import axes3d
-from numpy import linalg as LA
-from scipy.linalg import *
-from compute_3D_FFT import *
-from compute_2D_FFT import *
-from compute_3D_IFFT import *
-from compute_2D_IFFT import *
 
 ##In this function, we generate a 2D coefficient matrix
 ## with known x and y (k and l)
@@ -24,5 +16,6 @@ def diagonal_matrixA(N,k,l,gamma,dt):
     for i in range (0,N):
         theta=phi[i]
         const=exp(-1j*gamma*(ll*cos(theta)+kk*sin(theta))*dt)
+        #const=exp(-1j*gamma*(k*cos(theta)+l*(sin(theta)))*dt)
         result[i]=const
     return result
