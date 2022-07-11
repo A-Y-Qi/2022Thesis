@@ -35,6 +35,7 @@ def ifft_3D(FFT_matrixin3D, N):
             matrix_height=fft.ifft(fft.ifftshift(height))
             ##Add normalization (2pi period)
             matrix_ifft[:,i,j]=(N/(2*pi))*matrix_height
+            print("hello test")
     return matrix_ifft
 
 
